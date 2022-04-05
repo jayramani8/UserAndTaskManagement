@@ -309,3 +309,21 @@ body {
 .f-right {
   float: right;
 }
+
+/* pagination */
+
+.pagination {
+  text-align: center;
+}
+.pagination button {
+  text-decoration: none;
+  color: blue;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid blue;
+  margin: 0 1rem;
+}
+.pagination button:hover,
+.pagination button:active {
+  background-color: blue;
+  color: white;
+}

@@ -7,6 +7,7 @@ const editTask = () => {
 
   return (
     <>
+      <AdminNavbar />
       <EditTask />
     </>
   );

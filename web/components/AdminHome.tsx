@@ -2,38 +2,43 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import Link from "next/link";
 import Router from "next/router";
+import Axios from "axios";
 
 const AdminHome = () => {
-  const [userData, setUserData] = useState<any>([]);
-  const [filterUser, setFilterUser] = useState<any>("");
-  const [sortUsers, setSortUsers] = useState<any>({
+  const [userData, setUserData] = useState([]);
+  const [filterUser, setFilterUser] = useState("");
+  const [sortUsers, setSortUsers] = useState({
     sortUsers: "",
     sortStatus: "",
   });
   // const [rowsData, setRowsData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/show")
+    Axios.get("http://localhost:8080/show")
       .then((result) => {
-        return result.json();
+        return result;
       })
       .then((data) => {
-        setUserData(data[0]);
+        setUserData(data.data[0]);
         // console.log(data);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  const searchUser = (event: any) => {
+  const searchUser = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFilterUser(event.target.value);
   };
-  const sortUser = (event: any) => {
+  const sortUser = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setSortUsers({
       sortUsers: event.target.value,
       sortStatus: "",
     });
   };
-  const sortStatus = (event: any) => {
+  const sortstatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortUsers({
       sortUsers: "",
       sortStatus: event.target.value,
@@ -42,9 +47,7 @@ const AdminHome = () => {
 
   const onDeleteHandler = async (id: number) => {
     // alert(id);
-    const res = await fetch(`http://localhost:8080/deleteUser/${id}`, {
-      method: "DELETE",
-    });
+    const res = await Axios.delete(`http://localhost:8080/deleteUser/${id}`);
     if (res.status === 200) {
       alert("User Deleted");
 
@@ -76,7 +79,7 @@ const AdminHome = () => {
               <option value="email">Email</option>
               <option value="task">Task</option>
             </select>
-            <select style={{ width: "250px" }} onClick={sortStatus}>
+            <select style={{ width: "250px" }} onChange={sortstatus}>
               <option value="">Select Option</option>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>

@@ -10,6 +10,7 @@ const adminhome = () => {
 
   return (
     <>
+      <AdminNavbar />
       <AdminHome />
     </>
   );

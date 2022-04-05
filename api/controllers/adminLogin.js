@@ -3,7 +3,7 @@ const db = require("../models/index");
 const login = db.Login;
 
 const adminLogin = async(req,res)=>{
-    // console.log(req.body);
+    console.log(req.body);
     try{
         const { email, password } = req.body;
         
@@ -15,9 +15,9 @@ const adminLogin = async(req,res)=>{
           const  token = jwt.sign({id:result.id},"jayramanijayramanijayramanijayramanijay");
         //   console.log(result);
             // console.log(token);
+            res.status(200).json();
            return res.send({token: token});
-        }else{
-          return res.status(400).json({ error: "faild" });    
+        //   return res.status(200).json({ error: "faild" });    
 
         }
     }catch(err){

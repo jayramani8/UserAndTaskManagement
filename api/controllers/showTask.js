@@ -4,44 +4,54 @@ const task = db.Task;
 const User = db.User;
 
 const fetchTask = async(req,res)=>{
-    const data = req.body;
-     const searchTask = data.searchTask;
-    let sortTask = [];
-    if(data.sortTask!==""){
-        sortTask.push([data.sortTask,'ASC']);
-        console.log("set");
-    }
-    console.log(sortTask);
-    if(data.searchTask == undefined || data.sortTask===undefined){
-        const data = await task.findAll({
-            include:[
-                {
-                    model:User
+    try{
+        const item = req.body
+        const limit = 2;
+        let pageNumber= 0;
+        console.log(item.pageNo);
+        if(item.pageNo){
+            pageNumber = item.pageNo -1;
+        }
+        let search = {};
+        if(item.searchTask){
+            search={
+                title:{
+                    [Op.like]:'%' + item.searchTask + '%'
                 }
-            ]
-        });
-        await res.send(data);
-    }
+            }
+        }
     
-    else{
-        const data = await task.findAll({
+        let sortTask = [];
+        console.log(item);
+        if(item.sortTask){
+            if(item.order){
+            sortTask.push([item.sortTask,'DESC']);
+            }else{
+            sortTask.push([item.sortTask,'ASC']);
+
+            }
+        }
+        const data = await task.findAndCountAll({
+            
             include:[
                 {
                     model:User
                 }
             ],
-            where:{
-                title:{
-                    [Op.like]:'%' + searchTask + '%'
-                },
-            },
-            
-        // // $or:{
-            order:sortTask
-        // }
+            where:search,
+            order:sortTask,
+            limit:limit,
+            offset:pageNumber*limit,
         });
-        await res.send(data);
+        const page = Math.ceil(data.count/limit);
+        await res.send({data,page});
+
+    }catch(err){
+        console.log(err);
     }
     
 }
 module.exports = {fetchTask}
+
+
+

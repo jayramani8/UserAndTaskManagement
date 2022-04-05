@@ -7,6 +7,7 @@ const taskdetails = () => {
   homePage();
   return (
     <>
+      <AdminNavbar />
       <TaskDetails />
     </>
   );

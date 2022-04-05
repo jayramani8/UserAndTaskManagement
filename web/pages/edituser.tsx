@@ -7,6 +7,7 @@ const edituser = () => {
   homePage();
   return (
     <>
+      <AdminNavbar />
       <EditUser />
     </>
   );

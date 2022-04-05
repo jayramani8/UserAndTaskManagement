@@ -4,6 +4,7 @@ import Router from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import Axios from "axios";
 
 const AddUser = () => {
   const [insertUser, setInsertUser] = useState({
@@ -41,13 +42,7 @@ const AddUser = () => {
       };
       console.log(addUserData);
 
-      const res = await fetch("http://localhost:8080/insert", {
-        method: "POST",
-        body: JSON.stringify(addUserData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await Axios.post("http://localhost:8080/insert", addUserData);
       if (res.status === 200) {
         alert("User Created");
         Router.push("/adminhome");

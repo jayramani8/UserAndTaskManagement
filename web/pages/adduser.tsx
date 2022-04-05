@@ -7,6 +7,7 @@ const adduser = () => {
   homePage();
   return (
     <>
+      <AdminNavbar />
       <AddUser />
     </>
   );

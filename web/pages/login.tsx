@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 const login = () => {
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar />
       <Login />
     </div>
   );

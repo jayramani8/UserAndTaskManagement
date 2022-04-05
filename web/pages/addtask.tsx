@@ -7,6 +7,7 @@ const addtask = () => {
   homePage();
   return (
     <>
+      <AdminNavbar />
       <AddTask />
     </>
   );

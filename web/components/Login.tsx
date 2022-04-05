@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Router from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Axios from "axios";
 
 const Login = () => {
   const [login, setLogin] = useState({ email: "", password: "" });
@@ -23,27 +24,21 @@ const Login = () => {
       toast("password is required");
     } else {
       e.preventDefault();
-      const res = await fetch("http://localhost:8080/adminLogin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: login.email,
-          password: login.password,
-        }),
+      const res = await Axios.post("http://localhost:8080/adminLogin", {
+        email: login.email,
+        password: login.password,
       });
-      const data = await res.json();
-      // console.log(data.id);
-      if (res.status === 400 || !data) {
-        alert("login faild");
-      } else {
-        localStorage.setItem("jwtoken", data.token);
+      const data = res;
+      console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem("jwtoken", data.data.token);
         // console.log(data);
 
         alert("login success");
         // console.log("login success");
         Router.push("/adminhome");
+      } else {
+        alert("login faild");
       }
     }
   };

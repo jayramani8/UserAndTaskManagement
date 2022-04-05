@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import Router from "next/router";
+import Axios from "axios";
+// import { fetchDataType } from "../pages/EditTask/[editid]";
+export type fetchDataType = {
+  id: number;
+  title: string;
+  assignUser: string;
+  CompletionDate: Date;
+  status: string;
+  userId: number;
+  firstname: string;
+  lastname: string;
+};
 
 const EditTask = (props: any) => {
-  const [userData, setUserData] = useState<any>([]);
+  const [userData, setUserData] = useState([]);
   const {
     id,
     title,
@@ -23,12 +35,12 @@ const EditTask = (props: any) => {
   });
   // console.log(updatedTask);
   useEffect(() => {
-    fetch("http://localhost:8080/active ")
+    Axios.get("http://localhost:8080/active ")
       .then((result) => {
-        return result.json();
+        return result;
       })
       .then((data) => {
-        setUserData(data);
+        setUserData(data.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -51,13 +63,10 @@ const EditTask = (props: any) => {
     };
     console.log(UpdatedTaskData);
 
-    const res = await fetch(`http://localhost:8080/updatedTask/${id}`, {
-      method: "put",
-      body: JSON.stringify(UpdatedTaskData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await Axios.put(
+      `http://localhost:8080/updatedTask/${id}`,
+      UpdatedTaskData
+    );
     if (res.status === 200) {
       alert("Task Updated");
       Router.push("/taskdetails");
@@ -75,7 +84,10 @@ const EditTask = (props: any) => {
               <div className="col-12 col-md-9 col-lg-7 col-xl-6 p-4 ">
                 <div className="card border border-dark">
                   <div className="card-body p-5">
-                    <h2 className="text-uppercase text-center mb-5">
+                    <h2
+                      className="text-uppercase text-center mb-5"
+                      key={userId}
+                    >
                       Edit Task
                     </h2>
 

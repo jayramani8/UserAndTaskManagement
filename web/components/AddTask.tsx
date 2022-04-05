@@ -4,10 +4,10 @@ import Router from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-
+import Axios from "axios";
 // let activeArray: any = [];
 const AddTask = () => {
-  const [userData, setUserData] = useState<any>([]);
+  const [userData, setUserData] = useState([]);
   const [addtask, setAddTask] = useState({
     title: "",
     assignUser: "",
@@ -16,12 +16,13 @@ const AddTask = () => {
   // const [activeData, setActiveData] = useState<any>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/active ")
+    Axios.get("http://localhost:8080/active")
       .then((result) => {
-        return result.json();
+        return result;
       })
       .then((data) => {
-        setUserData(data);
+        setUserData(data.data);
+        // console.log(data.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -51,13 +52,7 @@ const AddTask = () => {
         CompletionDate: addtask.CompletionDate,
       };
       console.log(taskData);
-      const res = await fetch("http://localhost:8080/addtask", {
-        method: "POST",
-        body: JSON.stringify(taskData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await Axios.post("http://localhost:8080/addtask", taskData);
       if (res.status === 200) {
         alert("Task Created");
         Router.push("/taskdetails");

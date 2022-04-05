@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { type } from "os";
-import { fetchuser } from "../pages/Edituser/[userid]";
 import Router from "next/router";
+import Axios from "axios";
+import { fetchuser } from "../pages/Edituser/[userid]";
 
 const EditUser = (props: any) => {
-  // console.log(props.fetchUserData);
+  console.log(props.fetchUserData);
   const { id, firstname, lastname, email, status } = props.fetchUserData;
   const [fetchUserData, setFetchUserData] = useState(props.fetchUserData);
   console.log(fetchUserData);
@@ -28,13 +29,10 @@ const EditUser = (props: any) => {
       email: fetchUserData.email,
       status: fetchUserData.status,
     };
-    const res = await fetch(`http://localhost:8080/updateUSer/${id}`, {
-      method: "put",
-      body: JSON.stringify(UpdatedUserData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await Axios.put(
+      `http://localhost:8080/updateUSer/${id}`,
+      UpdatedUserData
+    );
     if (res.status === 200) {
       alert("User Updated");
       Router.push("/adminhome");
