@@ -309,7 +309,12 @@ body {
 .f-right {
   float: right;
 }
-
+.table-hading {
+  cursor: pointer;
+}
+.action-btn {
+  margin-right: 30px;
+}
 /* pagination */
 
 .pagination {

@@ -34,18 +34,14 @@ const TaskDetails = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const sortFiletrChange = (e: any) => {
+  const sortFiletrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFilterTask({
       ...filterTask,
       [e.target.name]: value,
     });
   };
-  // console.log(filterTask);
-  // const filterSortData = {
-  //   filterTask: filterTask,
-  //   order: order,
-  // };
+
   const searchSubmit = async () => {
     const res = await Axios.post("http://localhost:8080/showTask", filterTask);
     const data = res;
@@ -61,19 +57,18 @@ const TaskDetails = () => {
     setPage(data.data.page);
   };
 
-  const sortTitle = async () => {
-    setFilterTask({
+  const sortTitle = async (e: any) => {
+    const sortData = {
       searchTask: filterTask.searchTask,
-      sortTask: "title",
+      sortTask: e.target.id,
       order: !filterTask.order,
       pageNo: filterTask.pageNo,
-    });
-    console.log(filterTask);
+    };
+
+    setFilterTask(sortData);
+    // console.log(filterTask);
     if (filterTask.sortTask) {
-      const res = await Axios.post(
-        "http://localhost:8080/showTask",
-        filterTask
-      );
+      const res = await Axios.post("http://localhost:8080/showTask", sortData);
       const data = res;
       setTaskData(data.data.data.rows);
       setPage(data.data.page);
@@ -90,18 +85,17 @@ const TaskDetails = () => {
   };
 
   const onPageSubmit = async (pageNo: number) => {
-    setFilterTask({
+    const pageData = {
       searchTask: filterTask.searchTask,
       sortTask: filterTask.sortTask,
       order: filterTask.order,
       pageNo: pageNo,
-    });
-    console.log(filterTask);
+    };
+    setFilterTask(pageData);
 
-    const res = await Axios.post("http://localhost:8080/showTask", filterTask);
+    const res = await Axios.post("http://localhost:8080/showTask", pageData);
     const data = res;
     setTaskData(data.data.data.rows);
-    console.log(data);
   };
   // console.log(typeof page);
 
@@ -173,29 +167,45 @@ const TaskDetails = () => {
       <table className="table mt-3 container table-bordered">
         <thead className="thead-dark">
           <tr>
-            <th scope="col">No</th>
-            {/* onChange={sortFiletrChange} */}
-            <th scope="col" onChange={sortFiletrChange}>
-              Title
-              <button
-                className="btn"
-                name="title"
-                value="title"
-                onClick={sortTitle}
-              >
-                sort
-              </button>
+            <th scope="col" className="text-center">
+              No
             </th>
-            <th scope="col">Assign USer</th>
-            <th scope="col">Completion Date</th>
-            <th scope="col">Status</th>
-            <th scope="col">Action</th>
+            <th
+              scope="col"
+              className="table-hading text-center"
+              id="title"
+              onClick={sortTitle}
+            >
+              Title
+            </th>
+            <th scope="col" className="text-center">
+              Assign USer
+            </th>
+            <th
+              scope="col"
+              id="CompletionDate"
+              className="table-hading text-center"
+              onClick={sortTitle}
+            >
+              Completion Date
+            </th>
+            <th
+              scope="col"
+              id="status"
+              className="table-hading text-center"
+              onClick={sortTitle}
+            >
+              Status
+            </th>
+            <th scope="col" className="text-center">
+              Action
+            </th>
           </tr>
         </thead>
         <tbody>
           {taskData.map((item: any) => {
             return (
-              <tr key={item.id}>
+              <tr key={item.id} className="text-center">
                 <th scope="row">{item.id}</th>
                 <td>{item.title}</td>
                 <td>
@@ -203,23 +213,25 @@ const TaskDetails = () => {
                 </td>
                 <td>{item.CompletionDate}</td>
                 <td>{item.status}</td>
-                <td className="text-center">
-                  <Link href={`/EditTask/${item.id}`} passHref>
-                    <button type="button" className="btn btn-primary">
-                      Edit
+                <td className="text-center d-flex">
+                  {/* <div className="d-flex text-center"> */}
+                  <div className="action-btn">
+                    <Link href={`/EditTask/${item.id}`} passHref>
+                      <button type="button" className="btn btn-primary">
+                        Edit
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="ml-5">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => onDeleteHandler(item.id)}
+                    >
+                      Delete
                     </button>
-                  </Link>
-                </td>
-                <td>
-                  {/* <Link href="/edituser" passHref> */}
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => onDeleteHandler(item.id)}
-                  >
-                    Delete
-                  </button>
-                  {/* </Link> */}
+                  </div>
+                  {/* </div> */}
                 </td>
               </tr>
             );
