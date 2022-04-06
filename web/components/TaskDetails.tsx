@@ -25,7 +25,7 @@ const TaskDetails = () => {
         return result;
       })
       .then((data) => {
-        // console.log(data);
+        console.log(data);
 
         setPage(data.data.page);
 
@@ -111,17 +111,25 @@ const TaskDetails = () => {
                     <div className=" border border-dark">
                       <input
                         type="search"
-                        className="form-control"
+                        className="form-control "
                         onChange={sortFiletrChange}
                         name="searchTask"
                       />
                     </div>
+
                     <button
                       type="button"
-                      className="btn btn-primary"
+                      className="btn btn-primary search-btn rounded"
                       onClick={searchSubmit}
                     >
                       <Search />
+                    </button>
+                    <button
+                      type="reset"
+                      className="btn btn-primary rounded"
+                      onClick={onClear}
+                    >
+                      clear
                     </button>
                   </div>
                 </div>
@@ -148,15 +156,7 @@ const TaskDetails = () => {
                 </optgroup>
               </select> */}
 
-              <div className="mr-5">
-                <button
-                  type="reset"
-                  className="btn btn-primary mr-2"
-                  onClick={onClear}
-                >
-                  clear
-                </button>
-              </div>
+              <div className="mr-5"></div>
               <Link href="/addtask" passHref>
                 <button className="btn btn-primary">Add Task</button>
               </Link>
@@ -179,7 +179,7 @@ const TaskDetails = () => {
               Title
             </th>
             <th scope="col" className="text-center">
-              Assign USer
+              Assign User
             </th>
             <th
               scope="col"
@@ -204,12 +204,15 @@ const TaskDetails = () => {
         </thead>
         <tbody>
           {taskData.map((item: any) => {
+            // console.log(item);
+
             return (
               <tr key={item.id} className="text-center">
                 <th scope="row">{item.id}</th>
                 <td>{item.title}</td>
                 <td>
-                  {item.user.firstname} {item.user.lastname}
+                  {item.user === null ? "" : item.user.firstname}{" "}
+                  {item.user === null ? "" : item.user.lastname}
                 </td>
                 <td>{item.CompletionDate}</td>
                 <td>{item.status}</td>
@@ -247,6 +250,7 @@ const TaskDetails = () => {
               <button
                 name="pageNo"
                 key={i}
+                className="rounded"
                 value={i}
                 onClick={() => onPageSubmit(i)}
               >

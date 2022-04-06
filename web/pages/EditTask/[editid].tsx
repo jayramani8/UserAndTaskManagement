@@ -60,7 +60,7 @@ export type fetchDataType = {
   };
 };
 const editData = (props: { data: fetchDataType[] }) => {
-  console.log(props.data);
+  // console.log(props.data);
   const { id, title, assignUser, CompletionDate, status } = props.data[0];
   const fetchTaskData = {
     id,
@@ -68,9 +68,9 @@ const editData = (props: { data: fetchDataType[] }) => {
     assignUser,
     CompletionDate,
     status,
-    userID: props.data[0].user.id,
-    firstname: props.data[0].user.firstname,
-    lastname: props.data[0].user.lastname,
+    userID: props.data[0].user === null ? "" : props.data[0].user.id,
+    firstname: props.data[0].user === null ? "" : props.data[0].user.firstname,
+    lastname: props.data[0].user === null ? "" : props.data[0].user.lastname,
   };
   // console.log(fetchTaskData);
 

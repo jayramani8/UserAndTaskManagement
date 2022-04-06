@@ -315,6 +315,12 @@ body {
 .action-btn {
   margin-right: 30px;
 }
+.search-btn {
+  margin-right: 20px;
+}
+.search-input {
+  border-radius: 1rem;
+}
 /* pagination */
 
 .pagination {

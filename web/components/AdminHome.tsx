@@ -20,7 +20,7 @@ const AdminHome = () => {
       })
       .then((data) => {
         setUserData(data.data[0]);
-        // console.log(data);
+        console.log(data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -66,21 +66,30 @@ const AdminHome = () => {
                 <div className="">
                   <input
                     type="text"
+                    className="form-control"
                     placeholder="Search..."
                     onChange={searchUser}
                   />
                 </div>
               </div>
             </div>
-            <select style={{ width: "250px" }} onChange={sortUser}>
-              <option value="">Select Option</option>
+            <select
+              style={{ width: "250px" }}
+              className="form-control"
+              onChange={sortUser}
+            >
+              <option value="">--Sort By--</option>
               <option value="firstname">FirstName</option>
               <option value="lastname">LastName</option>
               <option value="email">Email</option>
               <option value="task">Task</option>
             </select>
-            <select style={{ width: "250px" }} onChange={sortstatus}>
-              <option value="">Select Option</option>
+            <select
+              style={{ width: "250px" }}
+              className="form-control"
+              onChange={sortstatus}
+            >
+              <option value="">--Sort By--</option>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
@@ -91,7 +100,7 @@ const AdminHome = () => {
         </div>
       </div>
       <table className="table mt-3 table-bordered container">
-        <thead className="thead-dark">
+        <thead className="thead-dark text-center">
           <tr>
             <th scope="col">No</th>
             <th scope="col">First Name</th>
@@ -102,7 +111,7 @@ const AdminHome = () => {
             <th scope="col">Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-center">
           {userData
             .filter((value: any) => {
               if (sortUsers.sortStatus === "active") {
@@ -151,7 +160,7 @@ const AdminHome = () => {
             .map((item: any) => {
               return (
                 <tr key={item.id}>
-                  <th scope="row">{item.id}</th>
+                  <td>{item.id}</td>
                   <td>{item.firstname}</td>
                   <td>{item.lastname}</td>
                   <td>{item.email}</td>

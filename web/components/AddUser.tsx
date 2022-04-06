@@ -101,6 +101,15 @@ const AddUser = () => {
                         />
                       </div>
                       <div className="form-outline mb-4">
+                        <label className="form-label">Password</label>
+                        <input
+                          type="password"
+                          name="password"
+                          className="form-control form-control-lg border border-dark"
+                          // onChange={inputHandler}
+                        />
+                      </div>
+                      <div className="form-outline mb-4">
                         <label className="form-label">Status</label>
                         <select
                           className="form-control form-control-lg border border-dark"

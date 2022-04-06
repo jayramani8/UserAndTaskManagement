@@ -41,8 +41,6 @@ const AddTask = () => {
   const onsubmitHandler = async (e: React.FormEvent) => {
     if (addtask.title.trim() === "") {
       toast("title is required");
-    } else if (addtask.assignUser === "") {
-      toast("assign User is required");
     } else if (addtask.CompletionDate === "") {
       toast("CompletionDate is required");
     } else {

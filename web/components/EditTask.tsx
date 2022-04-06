@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import Router from "next/router";
 import Axios from "axios";
+import Link from "next/link";
 // import { fetchDataType } from "../pages/EditTask/[editid]";
 export type fetchDataType = {
   id: number;
@@ -140,8 +141,11 @@ const EditTask = (props: any) => {
                           name="status"
                           onChange={inputHandler}
                         >
+                          <option value="open">Open</option>
+                          <option value="assign">Assign</option>
+                          <option value="inprogress">In Progress</option>
+                          <option value="onhold">On Hold</option>
                           <option value="complete">complete</option>
-                          <option value="pending">pending</option>
                         </select>
                       </div>
 
@@ -160,10 +164,15 @@ const EditTask = (props: any) => {
                         <label className="form-label">Email</label>
                       </div> */}
 
-                      <div className="d-flex justify-content-center mt-4">
+                      <div className="mt-4">
+                        <Link href="/taskdetails" passHref>
+                          <button type="button" className="btn btn-primary">
+                            Back
+                          </button>
+                        </Link>
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btn btn-primary f-right"
                           onClick={onsubmitHandler}
                         >
                           Update

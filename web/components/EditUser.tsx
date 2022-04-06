@@ -4,6 +4,7 @@ import { type } from "os";
 import Router from "next/router";
 import Axios from "axios";
 import { fetchuser } from "../pages/Edituser/[userid]";
+import Link from "next/link";
 
 const EditUser = (props: any) => {
   console.log(props.fetchUserData);
@@ -102,10 +103,15 @@ const EditUser = (props: any) => {
                         </select>
                       </div>
 
-                      <div className="d-flex justify-content-center mt-4">
+                      <div className="mt-4">
+                        <Link href="/adminhome" passHref>
+                          <button type="button" className="btn btn-primary">
+                            Back
+                          </button>
+                        </Link>
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btn btn-primary f-right"
                           onClick={onsubmitHandler}
                         >
                           Update
